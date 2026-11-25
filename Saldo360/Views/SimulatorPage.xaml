@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ctl="clr-namespace:Saldo360.Controls"
+             x:Class="Saldo360.Views.SimulatorPage"
+             Title="Simulador"
+             Shell.NavBarIsVisible="False">
+
+    <ScrollView>
+        <VerticalStackLayout x:Name="Root" Padding="20,24" Spacing="16">
+
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                <ctl:MenuButton VerticalOptions="Start" />
+                <VerticalStackLayout Grid.Column="1" Spacing="2">
+                    <Label Text="Simulador" Style="{StaticResource Title}" />
+                    <Label Text="Cruza a inflação (IBGE) com o dólar (AwesomeAPI)." Style="{StaticResource Subtitle}" />
+                </VerticalStackLayout>
+            </Grid>
+
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Quanto você tinha no começo do período?" Style="{StaticResource CardTitle}" />
+
+                    <Border Style="{StaticResource Field}">
+                        <Entry x:Name="AmountEntry" Placeholder="Ex.: 1000,00" Keyboard="Numeric" />
+                    </Border>
+
+                    <Label x:Name="ErrorLabel" TextColor="{StaticResource Danger}" FontSize="13" />
+                    <Button Text="Simular" Clicked="OnSimulate" />
+
+                    <HorizontalStackLayout Spacing="8">
+                        <ActivityIndicator x:Name="Busy" WidthRequest="18" HeightRequest="18"
+                                           Color="{StaticResource Primary}" />
+                        <Label x:Name="StatusLabel" Style="{StaticResource MutedLabel}" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                    <Label x:Name="PeriodLabel" Style="{StaticResource MutedLabel}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <VerticalStackLayout x:Name="ResultPanel" Spacing="16" IsVisible="False">
+
+                <!-- Resultado do IBGE -->
+                <Border Style="{StaticResource HeroCard}">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Para manter o poder de compra, você precisaria de" TextColor="#CFE9DC" FontSize="13" />
+                        <Label x:Name="CorrectedLabel" TextColor="White" FontFamily="OpenSansSemibold" FontSize="32" />
+                        <Label x:Name="InflationLabel" TextColor="#CFE9DC" FontSize="13" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Resultado da AwesomeAPI (período vindo do IBGE) -->
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Dólar no mesmo período" Style="{StaticResource CardTitle}" />
+                        <Label x:Name="UsdRangeLabel" FontSize="18" Style="{StaticResource Strong}" />
+                        <Label x:Name="UsdChangeLabel" FontSize="13" />
+                        <Label x:Name="UsdRealLabel" Style="{StaticResource MutedLabel}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Conversão do valor corrigido -->
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Esse valor corrigido, em moeda estrangeira" Style="{StaticResource CardTitle}" />
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                            <VerticalStackLayout>
+                                <Label Text="Dólar" Style="{StaticResource MutedLabel}" />
+                                <Label x:Name="UsdValueLabel" FontSize="20" Style="{StaticResource Strong}" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Column="1">
+                                <Label Text="Euro" Style="{StaticResource MutedLabel}" />
+                                <Label x:Name="EurValueLabel" FontSize="20" Style="{StaticResource Strong}" />
+                            </VerticalStackLayout>
+                        </Grid>
+                        <Label Text="Convertido pela cotação de hoje (AwesomeAPI)." Style="{StaticResource MutedLabel}" />
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+
+            <Label Text="Simulação informativa, baseada em dados públicos. Não é recomendação de investimento."
+                   Style="{StaticResource MutedLabel}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

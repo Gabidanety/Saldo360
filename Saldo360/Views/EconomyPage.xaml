@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ctl="clr-namespace:Saldo360.Controls"
+             x:Class="Saldo360.Views.EconomyPage"
+             Title="Economia"
+             Shell.NavBarIsVisible="False">
+
+    <ScrollView>
+        <VerticalStackLayout x:Name="Root" Padding="20,24" Spacing="16">
+
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                <ctl:MenuButton VerticalOptions="Start" />
+                <VerticalStackLayout Grid.Column="1" Spacing="2">
+                    <Label Text="Economia" Style="{StaticResource Title}" />
+                <Label Text="Indicadores atualizados direto da internet." Style="{StaticResource Subtitle}" />
+                </VerticalStackLayout>
+            </Grid>
+
+            <!-- API 1: AwesomeAPI -->
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Câmbio" Style="{StaticResource CardTitle}" />
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                        <Border Style="{StaticResource Field}" Padding="12">
+                            <VerticalStackLayout Spacing="2">
+                                <Label Text="Dólar (USD)" Style="{StaticResource MutedLabel}" />
+                                <Label x:Name="UsdValue" Text="—" FontSize="20" Style="{StaticResource Strong}" />
+                                <Label x:Name="UsdChange" FontSize="13" />
+                            </VerticalStackLayout>
+                        </Border>
+                        <Border Grid.Column="1" Style="{StaticResource Field}" Padding="12">
+                            <VerticalStackLayout Spacing="2">
+                                <Label Text="Euro (EUR)" Style="{StaticResource MutedLabel}" />
+                                <Label x:Name="EurValue" Text="—" FontSize="20" Style="{StaticResource Strong}" />
+                                <Label x:Name="EurChange" FontSize="13" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </Grid>
+
+                    <Label x:Name="CurrencyStatus" Style="{StaticResource MutedLabel}" />
+                    <Button Text="Atualizar moedas" Style="{StaticResource SecondaryButton}"
+                            Clicked="OnLoadCurrencies" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- API 2: IBGE -->
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Inflação (IPCA — IBGE)" Style="{StaticResource CardTitle}" />
+
+                    <VerticalStackLayout Spacing="2">
+                        <Label x:Name="IpcaLastLabel" Text="—" FontSize="28" TextColor="{StaticResource Primary}"
+                               FontFamily="OpenSansSemibold" />
+                        <Label x:Name="IpcaLastMonthLabel" Text="Variação do último mês divulgado"
+                               Style="{StaticResource MutedLabel}" />
+                    </VerticalStackLayout>
+
+                    <Label x:Name="IpcaAccumulatedLabel" Style="{StaticResource Strong}" />
+
+                    <VerticalStackLayout x:Name="IpcaList" Spacing="8">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Label Text="{Binding MonthText}" />
+                                    <Label Grid.Column="1" Text="{Binding ValueText}" Style="{StaticResource Strong}" />
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+
+                    <Label x:Name="IpcaStatus" Style="{StaticResource MutedLabel}" />
+                    <Button Text="Atualizar IPCA" Style="{StaticResource SecondaryButton}" Clicked="OnLoadIpca" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Atalho: cruza as duas APIs -->
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Simulador de poder de compra" Style="{StaticResource CardTitle}" />
+                    <Label Text="Cruza a inflação do IBGE com o dólar da AwesomeAPI para mostrar quanto o seu dinheiro perdeu ou ganhou."
+                           Style="{StaticResource MutedLabel}" />
+                    <Button Text="Abrir simulador" Clicked="OnOpenSimulator" />
+                    <Label Text="Ou compare, mês a mês, a inflação com a variação do dólar."
+                           Style="{StaticResource MutedLabel}" />
+                    <Button Text="Dólar x inflação" Style="{StaticResource SecondaryButton}" Clicked="OnOpenComparison" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Label Text="Os valores apresentados são informativos e não constituem recomendação de investimento."
+                   Style="{StaticResource MutedLabel}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

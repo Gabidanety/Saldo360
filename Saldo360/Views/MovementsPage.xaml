@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ctl="clr-namespace:Saldo360.Controls"
+             x:Class="Saldo360.Views.MovementsPage"
+             Title="Movimentações"
+             Shell.NavBarIsVisible="False">
+
+    <Grid x:Name="Root" RowDefinitions="Auto,*" Padding="20,24,20,0" RowSpacing="12">
+
+        <VerticalStackLayout Spacing="12">
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                <ctl:MenuButton VerticalOptions="Start" />
+                <VerticalStackLayout Grid.Column="1" Spacing="2">
+                    <Label Text="Movimentações" Style="{StaticResource Title}" />
+                <Label Text="Toque em um item para ver os detalhes." Style="{StaticResource Subtitle}" />
+                </VerticalStackLayout>
+            </Grid>
+            <Button Text="＋  Adicionar" Clicked="OnAdd" />
+        </VerticalStackLayout>
+
+        <CollectionView x:Name="MovementsList" Grid.Row="1" SelectionMode="None">
+            <CollectionView.EmptyView>
+                <Label Text="Nenhuma movimentação ainda. Toque em Adicionar para começar."
+                       Style="{StaticResource MutedLabel}" Margin="0,24" HorizontalTextAlignment="Center" />
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Style="{StaticResource Card}" Margin="0,0,0,10" Padding="14">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnItemTapped" />
+                        </Border.GestureRecognizers>
+
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                            <Border BackgroundColor="{StaticResource PrimarySoft}" StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 22" WidthRequest="44" HeightRequest="44"
+                                    VerticalOptions="Center">
+                                <Label Text="{Binding Icon}" FontSize="20"
+                                       HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                <Label Text="{Binding Description}" Style="{StaticResource Strong}"
+                                       LineBreakMode="TailTruncation" />
+                                <Label Text="{Binding SubText}" Style="{StaticResource MutedLabel}" />
+                            </VerticalStackLayout>
+
+                            <Label Grid.Column="2" Text="{Binding AmountText}" TextColor="{Binding AmountColor}"
+                                   Style="{StaticResource Strong}" VerticalOptions="Center" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

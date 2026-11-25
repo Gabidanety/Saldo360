@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ctl="clr-namespace:Saldo360.Controls"
+             x:Class="Saldo360.Views.ComparisonPage"
+             Title="Dólar x inflação"
+             Shell.NavBarIsVisible="False">
+
+    <ScrollView>
+        <VerticalStackLayout x:Name="Root" Padding="20,24" Spacing="16">
+
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                <ctl:MenuButton VerticalOptions="Start" />
+                <VerticalStackLayout Grid.Column="1" Spacing="2">
+                    <Label Text="Dólar x inflação" Style="{StaticResource Title}" />
+                    <Label Text="Mês a mês: IPCA (IBGE) contra o dólar (AwesomeAPI)." Style="{StaticResource Subtitle}" />
+                </VerticalStackLayout>
+            </Grid>
+
+            <HorizontalStackLayout Spacing="8">
+                <ActivityIndicator x:Name="Busy" WidthRequest="18" HeightRequest="18"
+                                   Color="{StaticResource Primary}" />
+                <Label x:Name="StatusLabel" Style="{StaticResource MutedLabel}" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <!-- Resumo -->
+            <Border x:Name="SummaryCard" Style="{StaticResource HeroCard}" IsVisible="False">
+                <VerticalStackLayout Spacing="6">
+                    <Label x:Name="HeadlineLabel" TextColor="White" FontFamily="OpenSansSemibold" FontSize="20" />
+                    <Label x:Name="AccumulatedLabel" TextColor="#CFE9DC" FontSize="13" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Tabela mês a mês -->
+            <Border x:Name="TableCard" Style="{StaticResource Card}" IsVisible="False">
+                <VerticalStackLayout Spacing="10">
+                    <Grid ColumnDefinitions="*,80,80">
+                        <Label Text="Mês" Style="{StaticResource MutedLabel}" />
+                        <Label Grid.Column="1" Text="IPCA" Style="{StaticResource MutedLabel}" HorizontalTextAlignment="End" />
+                        <Label Grid.Column="2" Text="Dólar" Style="{StaticResource MutedLabel}" HorizontalTextAlignment="End" />
+                    </Grid>
+
+                    <VerticalStackLayout x:Name="RowsList" Spacing="12">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <VerticalStackLayout Spacing="2">
+                                    <Grid ColumnDefinitions="*,80,80">
+                                        <Label Text="{Binding MonthText}" Style="{StaticResource Strong}" />
+                                        <Label Grid.Column="1" Text="{Binding IpcaText}" HorizontalTextAlignment="End" />
+                                        <Label Grid.Column="2" Text="{Binding UsdText}" TextColor="{Binding UsdColor}"
+                                               Style="{StaticResource Strong}" HorizontalTextAlignment="End" />
+                                    </Grid>
+                                    <Label Text="{Binding VerdictText}" Style="{StaticResource MutedLabel}" />
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <Button Text="Atualizar comparativo" Style="{StaticResource SecondaryButton}" Clicked="OnRefresh" />
+
+            <Label Text="Variação do dólar = fechamento do mês contra o fechamento do mês anterior. Dados públicos, apenas informativos."
+                   Style="{StaticResource MutedLabel}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

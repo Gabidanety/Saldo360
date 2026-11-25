@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Saldo360.Views.AddMovementPage"
+             Title="Nova movimentação">
+
+    <ScrollView>
+        <VerticalStackLayout x:Name="Root" Padding="20,24" Spacing="16">
+
+            <Grid ColumnDefinitions="*,Auto">
+                <Label Text="Novo lançamento" Style="{StaticResource Title}" VerticalOptions="Center" />
+                <Button Grid.Column="1" Text="Cancelar" Style="{StaticResource SecondaryButton}"
+                        HeightRequest="40" Clicked="OnCancel" />
+            </Grid>
+
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="12">
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                        <Button x:Name="ExpenseButton" Text="Despesa" Clicked="OnExpenseClicked" />
+                        <Button x:Name="IncomeButton" Grid.Column="1" Text="Receita" Clicked="OnIncomeClicked" />
+                    </Grid>
+
+                    <Label Text="Descrição" Style="{StaticResource MutedLabel}" />
+                    <Border Style="{StaticResource Field}">
+                        <Entry x:Name="DescriptionEntry" Placeholder="Ex.: Mercado" />
+                    </Border>
+
+                    <Label Text="Valor" Style="{StaticResource MutedLabel}" />
+                    <Border Style="{StaticResource Field}">
+                        <Entry x:Name="AmountEntry" Placeholder="Ex.: 45,90" Keyboard="Numeric" />
+                    </Border>
+
+                    <Label Text="Categoria" Style="{StaticResource MutedLabel}" />
+                    <Border Style="{StaticResource Field}">
+                        <Picker x:Name="CategoryPicker" Title="Escolha a categoria" />
+                    </Border>
+
+                    <Label Text="Data" Style="{StaticResource MutedLabel}" />
+                    <Border Style="{StaticResource Field}">
+                        <DatePicker x:Name="DateField" />
+                    </Border>
+
+                    <Label x:Name="ErrorLabel" TextColor="{StaticResource Danger}" FontSize="13" />
+                    <Button Text="Salvar lançamento" Clicked="OnSave" />
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

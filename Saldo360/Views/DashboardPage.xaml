@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ctl="clr-namespace:Saldo360.Controls"
+             x:Class="Saldo360.Views.DashboardPage"
+             Title="Início"
+             Shell.NavBarIsVisible="False">
+
+    <ScrollView>
+        <VerticalStackLayout x:Name="Root" Padding="20,24" Spacing="16">
+
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                <ctl:MenuButton VerticalOptions="Start" />
+                <VerticalStackLayout Grid.Column="1" Spacing="2">
+                    <Label Text="Saldo360" Style="{StaticResource Title}" />
+                <Label Text="Seu dinheiro, com mais clareza." Style="{StaticResource Subtitle}" />
+                </VerticalStackLayout>
+            </Grid>
+
+            <!-- Resumo do mês -->
+            <Border Style="{StaticResource HeroCard}">
+                <VerticalStackLayout Spacing="16">
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="Saldo do mês" TextColor="#CFE9DC" FontSize="14" />
+                        <Label x:Name="BalanceLabel" Text="R$ 0,00" TextColor="White"
+                               FontFamily="OpenSansSemibold" FontSize="34" />
+                    </VerticalStackLayout>
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                        <VerticalStackLayout Spacing="2">
+                            <Label Text="↑ Receitas" TextColor="#CFE9DC" FontSize="13" />
+                            <Label x:Name="IncomeLabel" Text="R$ 0,00" TextColor="White"
+                                   FontFamily="OpenSansSemibold" FontSize="18" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1" Spacing="2">
+                            <Label Text="↓ Despesas" TextColor="#CFE9DC" FontSize="13" />
+                            <Label x:Name="ExpenseLabel" Text="R$ 0,00" TextColor="White"
+                                   FontFamily="OpenSansSemibold" FontSize="18" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <Button Text="＋  Nova movimentação" Clicked="OnAddMovement" />
+
+            <!-- Gastos por categoria -->
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Gastos por categoria" Style="{StaticResource CardTitle}" />
+                    <Label x:Name="NoDataLabel" Text="Nenhuma despesa neste mês ainda."
+                           Style="{StaticResource MutedLabel}" />
+
+                    <VerticalStackLayout x:Name="CategoryList" Spacing="12">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <VerticalStackLayout Spacing="4">
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <Label Text="{Binding Title}" />
+                                        <Label Grid.Column="1" Text="{Binding TotalText}"
+                                               Style="{StaticResource Strong}" />
+                                    </Grid>
+                                    <ProgressBar Progress="{Binding Progress}" />
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Cotações (API 1: AwesomeAPI) -->
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Cotações" Style="{StaticResource CardTitle}" />
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                        <VerticalStackLayout Spacing="2">
+                            <Label Text="Dólar (USD)" Style="{StaticResource MutedLabel}" />
+                            <Label x:Name="UsdValue" Text="—" Style="{StaticResource CardTitle}" />
+                            <Label x:Name="UsdChange" Text="" FontSize="13" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1" Spacing="2">
+                            <Label Text="Euro (EUR)" Style="{StaticResource MutedLabel}" />
+                            <Label x:Name="EurValue" Text="—" Style="{StaticResource CardTitle}" />
+                            <Label x:Name="EurChange" Text="" FontSize="13" />
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <Label x:Name="CurrencyStatus" Style="{StaticResource MutedLabel}" />
+                    <Button Text="Atualizar cotações" Style="{StaticResource SecondaryButton}"
+                            Clicked="OnRefreshCurrency" />
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

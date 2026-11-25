@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Saldo360/Saldo360.csproj">
+    <BuildType Project="Debug" />
+    <Deploy />
+  </Project>
+</Solution>

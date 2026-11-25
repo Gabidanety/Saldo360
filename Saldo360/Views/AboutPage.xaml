@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ctl="clr-namespace:Saldo360.Controls"
+             x:Class="Saldo360.Views.AboutPage"
+             Title="Sobre"
+             Shell.NavBarIsVisible="False">
+
+    <ScrollView>
+        <VerticalStackLayout x:Name="Root" Padding="20,24" Spacing="16">
+
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                <ctl:MenuButton VerticalOptions="Start" />
+                <VerticalStackLayout Grid.Column="1" Spacing="2">
+                    <Label Text="Sobre" Style="{StaticResource Title}" />
+                    <Label x:Name="VersionLabel" Style="{StaticResource Subtitle}" />
+                </VerticalStackLayout>
+            </Grid>
+
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Navegação do app" Style="{StaticResource CardTitle}" />
+                    <Label Text="Menu lateral (Flyout): este menu, aberto pelo botão ☰ ou deslizando da borda esquerda."
+                           Style="{StaticResource MutedLabel}" />
+                    <Label Text="Abas (Tab): menu inferior entre as 4 telas principais."
+                           Style="{StaticResource MutedLabel}" />
+                    <Label Text="Pilha (Stack): Movimentações → Detalhes, com botão voltar."
+                           Style="{StaticResource MutedLabel}" />
+                    <Label Text="Modal: Nova movimentação abre por cima das outras telas."
+                           Style="{StaticResource MutedLabel}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Fontes de dados" Style="{StaticResource CardTitle}" />
+                    <Label Text="Câmbio: AwesomeAPI (dólar e euro)." Style="{StaticResource MutedLabel}" />
+                    <Label Text="Inflação: IBGE / SIDRA (IPCA mensal)." Style="{StaticResource MutedLabel}" />
+                    <Label Text="Seus lançamentos, limites e meta ficam salvos só neste aparelho."
+                           Style="{StaticResource MutedLabel}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Button Text="Apagar todos os dados" Style="{StaticResource DangerButton}" Clicked="OnClearData" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

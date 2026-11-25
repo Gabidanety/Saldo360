@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ctl="clr-namespace:Saldo360.Controls"
+             x:Class="Saldo360.Views.PlanningPage"
+             Title="Planejamento"
+             Shell.NavBarIsVisible="False">
+
+    <ScrollView>
+        <VerticalStackLayout x:Name="Root" Padding="20,24" Spacing="16">
+
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                <ctl:MenuButton VerticalOptions="Start" />
+                <VerticalStackLayout Grid.Column="1" Spacing="2">
+                    <Label Text="Planejamento" Style="{StaticResource Title}" />
+                <Label Text="Limites e metas para manter seu mês no caminho." Style="{StaticResource Subtitle}" />
+                </VerticalStackLayout>
+            </Grid>
+
+            <!-- Limites por categoria -->
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Limites por categoria" Style="{StaticResource CardTitle}" />
+                    <Label x:Name="NoBudgetLabel"
+                           Text="Defina quanto quer gastar por mês em cada categoria e acompanhe aqui."
+                           Style="{StaticResource MutedLabel}" />
+
+                    <VerticalStackLayout x:Name="BudgetList" Spacing="14">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <VerticalStackLayout Spacing="4">
+                                    <VerticalStackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnBudgetTapped" />
+                                    </VerticalStackLayout.GestureRecognizers>
+
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <Label Text="{Binding Title}" Style="{StaticResource Strong}" />
+                                        <Label Grid.Column="1" Text="{Binding PercentText}"
+                                               TextColor="{Binding BarColor}" FontSize="13" />
+                                    </Grid>
+                                    <ProgressBar Progress="{Binding Progress}" ProgressColor="{Binding BarColor}" />
+                                    <Label Text="{Binding SummaryText}" Style="{StaticResource MutedLabel}" />
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+
+                    <Button Text="Definir limite" Style="{StaticResource SecondaryButton}" Clicked="OnAddBudget" />
+                    <Label Text="Dica: toque em um limite para editar (use 0 para remover)."
+                           Style="{StaticResource MutedLabel}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Meta de economia -->
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Meta de economia" Style="{StaticResource CardTitle}" />
+
+                    <VerticalStackLayout x:Name="NoGoalLayout" Spacing="12">
+                        <Label Text="Crie uma meta e acompanhe quanto falta para chegar lá."
+                               Style="{StaticResource MutedLabel}" />
+                        <Button Text="Criar meta" Clicked="OnCreateGoal" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout x:Name="GoalLayout" Spacing="10" IsVisible="False">
+                        <Label x:Name="GoalNameLabel" FontSize="18" Style="{StaticResource Strong}" />
+                        <ProgressBar x:Name="GoalProgress" />
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label x:Name="GoalAmountLabel" Style="{StaticResource MutedLabel}" />
+                            <Label x:Name="GoalPercentLabel" Grid.Column="1" TextColor="{StaticResource Primary}"
+                                   FontSize="13" />
+                        </Grid>
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                            <Button Text="Adicionar valor" Clicked="OnAddToGoal" />
+                            <Button Grid.Column="1" Text="Excluir meta" Style="{StaticResource SecondaryButton}"
+                                    Clicked="OnRemoveGoal" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
